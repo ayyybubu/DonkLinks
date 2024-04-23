@@ -1,4 +1,4 @@
-const channel = "ayyybubu"; // Replace with your Twitch channel name
+const channel = "yabbe"; // Replace with your Twitch channel name
 let processedLinks = {}; // Object to store processed links
 let twitterLinks = {}; // Object to store Twitter links and their corresponding cards
 let isConnected = false; // Flag to indicate if connected to Twitch chat
