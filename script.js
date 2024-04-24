@@ -47,7 +47,7 @@ function fetchChat() {
                         const videoId = getYouTubeVideoId(link);
                         if (videoId) {
                             embedCode = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                            type = 'default';
+                            type = 'youtube';
                         }
                     } else if (link.includes("tiktok.com")) {
                         const videoId = getTikTokVideoId(link);
@@ -186,52 +186,48 @@ function createCard(username, link, embedCode, type, savedMessage) {
     }
     card.dataset.link = link;
 
-// Create headerInfo container
-const headerInfo = document.createElement('div');
-headerInfo.classList.add('header-info');
+    // Create headerInfo container
+    const headerInfo = document.createElement('div');
+    headerInfo.classList.add('header-info');
 
-// Create shortened link element
-const cleanedLink = link.replace(/(^\w+:|^)\/\//, '').replace('www.', ''); // Remove protocols and 'www'
-const shortenedLink = cleanedLink.length > 60 ? cleanedLink.substring(0, 60) + "..." : cleanedLink;
+    // Create shortened link element
+    const cleanedLink = link.replace(/(^\w+:|^)\/\//, '').replace('www.', ''); // Remove protocols and 'www'
+    const shortenedLink = cleanedLink.length > 60 ? cleanedLink.substring(0, 60) + "..." : cleanedLink;
 
-const linkElement = document.createElement('a');
-linkElement.classList.add('link-element');
-linkElement.href = link;
-linkElement.target = "_blank";
+    const linkElement = document.createElement('a');
+    linkElement.classList.add('link-element');
+    linkElement.href = link;
+    linkElement.target = "_blank";
 
-// Set styles for the link element
-linkElement.innerHTML = `
-    ${shortenedLink}
-`;
+    // Set styles for the link element
+    linkElement.innerHTML = `
+        ${shortenedLink}
+    `;
 
-// Create cardHeader
-const cardHeader = document.createElement('div');
-cardHeader.classList.add('card-header');
-cardHeader.innerHTML = `
-    <div class="card-userinfo"> 
-        <div class="profile-pic-con"><img src="https://cdn.7tv.app/emote/64a0529cecdb531b02a2e378/3x.webp" class="card-profile-pic" alt="Profile picture"></div>
+    // Create cardHeader
+    const cardHeader = document.createElement('div');
+    cardHeader.classList.add('card-header');
+    cardHeader.innerHTML = `
+        <div class="card-userinfo"> 
+            <div class="profile-pic-con"><img src="https://cdn.7tv.app/emote/64a0529cecdb531b02a2e378/3x.webp" class="card-profile-pic" alt="Profile picture"></div>
             <div class="card-userinfo-text" style="display: flex; flex-direction: column;align-items: flex-start; gap: 0px;">   
                 <span style="font-weight: 600; font-size: 16px;">${username}</span> 
                 ${linkElement.outerHTML} 
             </div>
         </div>
-    </div>
-    <div class="button-group">
-        ${type !== 'link' ? '<button class="toggle-button-hide card-buttons"><i class="ph ph-arrows-in-simple"></i></button>' : ''}
-        <button class="delete-button card-buttons">
-        <i class="ph ph-x"></i>
-        </button>
-    </div>
-`;
-headerInfo.appendChild(cardHeader);
-
-
-
+        <div class="button-group">
+            ${type !== 'link' ? '<button class="toggle-button-hide card-buttons"><i class="ph ph-arrows-in-simple"></i></button>' : ''}
+            <button class="delete-button card-buttons">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+    `;
+    headerInfo.appendChild(cardHeader);
 
     // Create the savedMessage div
     const savedMessageDiv = document.createElement('div');
     savedMessageDiv.innerHTML = `
-            <span style="word-wrap: break-word; text-align: left; font-weight: 300; font-size: 15px; margin-top: 0.5rem; display: flex;">${savedMessage}</span>
+        <span style="word-wrap: break-word; text-align: left; font-weight: 300; font-size: 15px; margin-top: 0.5rem; display: flex;">${savedMessage}</span>
     `;
 
     // Append savedMessageDiv to the headerInfo container
@@ -248,7 +244,18 @@ headerInfo.appendChild(cardHeader);
         } else if (type === 'twitter') {
             cardContent.classList.add('twitter-style');
         }
-        cardContent.innerHTML = embedCode;
+        else if (type === 'youtube') {
+            cardContent.classList.add('youtube-style');
+        }
+        // For Imgur embeds, wrap the embed code inside a container div
+        if (type === 'imgur') {
+            const imgurContainer = document.createElement('div');
+            imgurContainer.classList.add('imgur-container');
+            imgurContainer.innerHTML = embedCode;
+            cardContent.appendChild(imgurContainer);
+        } else {
+            cardContent.innerHTML = embedCode;
+        }
         card.appendChild(cardContent);
     }
 
@@ -346,7 +353,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
     let type = '';
 
     if (link.includes("youtube.com") || link.includes("youtu.be")) {
-        type = 'default';
+        type = 'youtube';
     } else if (link.includes("clips.twitch.tv")) {
         type = 'default';
     } else if (link.includes("twitch.tv")) {
@@ -361,6 +368,21 @@ function addCard(username, link, embedCode, card, savedMessage) {
         type = 'tiktok';
     } else if (isImageLink(link)) {
         type = 'image';
+    } else if (link.includes("imgur.com")) {
+        // If the link is from Imgur, create the Imgur embed code
+        const imgurId = getImgurId(link);
+        if (imgurId) {
+            embedCode = `
+            <blockquote class="imgur-embed-pub" lang="en" data-id="${imgurId}">
+                <a href="//imgur.com/${imgurId}">View on Imgur</a>
+            </blockquote>
+            <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+        `;
+            type = 'imgur';
+
+            // Load Imgur SDK asynchronously
+            loadImgurSDK();
+        }
     } else {
         type = 'link'; // Treat other links as regular links
     }
@@ -391,6 +413,22 @@ function addCard(username, link, embedCode, card, savedMessage) {
         const imageElement = document.createElement('img');
         cardContent.style.paddingTop = '0%';
     }
+}
+
+// Function to load the Imgur SDK asynchronously
+function loadImgurSDK() {
+    const script = document.createElement('script');
+    script.src = 'https://s.imgur.com/min/embed.js';
+    script.charset = 'utf-8';
+    script.async = true;
+    document.body.appendChild(script);
+}
+
+// Function to extract Imgur ID from URL
+function getImgurId(url) {
+    const regExp = /imgur\.com\/(?:gallery\/)?(?:a\/)?(\w+)/;
+    const match = url.match(regExp);
+    return match && match[1];
 }
 
 
