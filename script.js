@@ -120,7 +120,7 @@ function extractMessageText(message) {
 // Function to update the card count display
 function updateCardCount() {
     const cardCountButton = document.getElementById("card-count-button");
-    cardCountButton.textContent = `Links: ${cardCount}`;
+    cardCountButton.innerHTML = `<i class="ph ph-link"></i>Links: ${cardCount}`;
 
     // Display "No links submitted" text if link count is 0
     if (cardCount === 0) {
@@ -184,70 +184,53 @@ function createCard(username, link, embedCode, type, savedMessage) {
     }
     card.dataset.link = link;
 
-    // Create headerInfo container
-    const headerInfo = document.createElement('div');
-    headerInfo.classList.add('header-info');
+// Create headerInfo container
+const headerInfo = document.createElement('div');
+headerInfo.classList.add('header-info');
 
-    // Create cardHeader
-    const cardHeader = document.createElement('div');
-    cardHeader.classList.add('card-header');
-    cardHeader.innerHTML = `
-        <div style="display: flex; align-items: center;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FF69B4" viewBox="0 0 256 256">
-                <path d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.77,12c18.12-31.32,50.12-50,85.61-50s67.49,18.69,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z"></path>
-            </svg>
-            <span style="font-weight: bold; font-size: 16px;">${username}</span>
-        </div>
-        <div class="button-group">
-            ${type !== 'link' ? '<button class="toggle-button">Show/Hide</button>' : ''}
-            <button class="toggle-button delete-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffffff" viewBox="0 0 256 256">
-                    <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
-                </svg>
-            </button>
-        </div>
-    `;
-    headerInfo.appendChild(cardHeader);
+// Create shortened link element
+const cleanedLink = link.replace(/(^\w+:|^)\/\//, '').replace('www.', ''); // Remove protocols and 'www'
+const shortenedLink = cleanedLink.length > 60 ? cleanedLink.substring(0, 60) + "..." : cleanedLink;
 
-    // Create shortened link element
-    const cleanedLink = link.replace(/(^\w+:|^)\/\//, '').replace('www.', ''); // Remove protocols and 'www'
-    const shortenedLink = cleanedLink.length > 60 ? cleanedLink.substring(0, 60) + "..." : cleanedLink;
-    const linkElement = document.createElement('a');
-    linkElement.classList.add('link-element');
-    linkElement.href = link;
-    linkElement.target = "_blank";
-    linkElement.style.display = 'flex';
-    linkElement.style.alignItems = 'center';
-    linkElement.style.textDecoration = 'none';
-    linkElement.style.color = '#ffffff';
-    linkElement.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FF69B4" viewBox="0 0 256 256" style="margin-right: 8px;">
-            <path d="M87.5,151.52l64-64a12,12,0,0,1,17,17l-64,64a12,12,0,0,1-17-17Zm131-114a60.08,60.08,0,0,0-84.87,0L103.51,67.61a12,12,0,0,0,17,17l30.07-30.06a36,36,0,0,1,50.93,50.92L171.4,135.52a12,12,0,1,0,17,17l30.08-30.06A60.09,60.09,0,0,0,218.45,37.55ZM135.52,171.4l-30.07,30.08a36,36,0,0,1-50.92-50.93l30.06-30.07a12,12,0,0,0-17-17L37.55,133.58a60,60,0,0,0,84.88,84.87l30.06-30.07a12,12,0,0,0-17-17Z"></path>
-        </svg>
-        <span>${shortenedLink}</span>
-    `;
-    linkElement.querySelector('span').style.textDecoration = 'none';
-    linkElement.querySelector('span').style.transition = 'color 0.3s';
-    linkElement.addEventListener('mouseenter', function() {
-        this.style.color = '#FF69B4';
-    });
-    linkElement.addEventListener('mouseleave', function() {
-        this.style.color = '#ffffff';
-    });
-    headerInfo.appendChild(linkElement);
+const linkElement = document.createElement('a');
+linkElement.classList.add('link-element');
+linkElement.href = link;
+linkElement.target = "_blank";
+
+// Set styles for the link element
+linkElement.innerHTML = `
+    ${shortenedLink}
+`;
+
+// Create cardHeader
+const cardHeader = document.createElement('div');
+cardHeader.classList.add('card-header');
+cardHeader.innerHTML = `
+    <div class="card-userinfo"> 
+        <div class="profile-pic-con"><img src="https://cdn.7tv.app/emote/64a0529cecdb531b02a2e378/3x.webp" class="card-profile-pic" alt="Profile picture"></div>
+            <div class="card-userinfo-text" style="display: flex; flex-direction: column;align-items: flex-start; gap: 0px;">   
+                <span style="font-weight: 600; font-size: 16px;">${username}</span> 
+                ${linkElement.outerHTML} 
+            </div>
+        </div>
+    </div>
+    <div class="button-group">
+        ${type !== 'link' ? '<button class="toggle-button-hide card-buttons"><i class="ph ph-arrows-in-simple"></i></button>' : ''}
+        <button class="delete-button card-buttons">
+        <i class="ph ph-x"></i>
+        </button>
+    </div>
+`;
+headerInfo.appendChild(cardHeader);
+
+
+
 
     // Create the savedMessage div
     const savedMessageDiv = document.createElement('div');
     savedMessageDiv.innerHTML = `
-        <div style="display: flex; align-items: stretch;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#FF69B4" viewBox="0 0 256 256" style="margin-right: 8px;">
-                <path d="M120,128a16,16,0,1,1-16-16A16,16,0,0,1,120,128Zm32-16a16,16,0,1,0,16,16A16,16,0,0,0,152,112Zm84,16A108,108,0,0,1,78.77,224.15L46.34,235A20,20,0,0,1,21,209.66l10.81-32.43A108,108,0,1,1,236,128Zm-24,0A84,84,0,1,0,55.27,170.06a12,12,0,0,1,1,9.81l-9.93,29.79,29.79-9.93a12.1,12.1,0,0,1,3.8-.62,12,12,0,0,1,6,1.62A84,84,0,0,0,212,128Z">
-                </path>
-            </svg>
-            <span style="max-width: 600px; word-wrap: break-word;">${savedMessage}</span>
-        </div>
+            <span style="word-wrap: break-word; text-align: left; font-weight: 300; font-size: 15px; margin-top: 0.5rem; display: flex;">${savedMessage}</span>
     `;
-    savedMessageDiv.style.marginTop = '6px'; // Add margin-top style
 
     // Append savedMessageDiv to the headerInfo container
     headerInfo.appendChild(savedMessageDiv);
@@ -288,11 +271,22 @@ function toggleEmbed(cardContent) {
 
 // Event listener for toggle button clicks
 document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('toggle-button')) {
-        const card = event.target.closest('.card');
+    const toggleButton = event.target.closest('.toggle-button-hide');
+    if (toggleButton) {
+        const icon = toggleButton.querySelector('i');
+        const card = toggleButton.closest('.card');
         const cardContent = card.querySelector('.card-content');
+        
         if (cardContent) {
             toggleEmbed(cardContent);
+            // Toggle icon
+            if (icon.classList.contains('ph-arrows-in-simple')) {
+                icon.classList.remove('ph-arrows-in-simple');
+                icon.classList.add('ph-arrows-out-simple');
+            } else {
+                icon.classList.remove('ph-arrows-out-simple');
+                icon.classList.add('ph-arrows-in-simple');
+            }
         }
     }
 });
@@ -426,10 +420,10 @@ document.getElementById("reset-button").addEventListener("click", function() {
     updateCardCount(); // Update the card count display
 });
 
-// Toggle queue button functionality
+//Toggle queue button functionality
 document.getElementById("toggle-queue-button").addEventListener("click", function() {
     isQueueOpen = !isQueueOpen; // Toggle queue status
-    this.textContent = isQueueOpen ? 'Queue Open' : 'Queue Closed'; // Update button text
+    this.innerHTML = isQueueOpen ? '<i class="ph ph-lock-key-open"></i> Queue Open' : '<i class="ph ph-lock-key"></i> Queue Closed'; // Update button content
     this.classList.toggle('close', !isQueueOpen); // Add 'close' class if queue is closed
 });
 
@@ -453,7 +447,7 @@ document.getElementById("scroll-to-top-button").addEventListener("click", functi
 document.addEventListener('DOMContentLoaded', function() {
     updateStatusIndicator();
     // Set the queue status button and flag to "closed" on page load
-    document.getElementById("toggle-queue-button").textContent = 'Queue Closed';
+    document.getElementById("toggle-queue-button").innerHTML = '<i class="ph ph-lock-key"></i> Queue Closed';
     document.getElementById("toggle-queue-button").classList.add('close');
     isQueueOpen = false;
 
@@ -479,13 +473,9 @@ document.getElementById("hide-embeds-button").addEventListener("click", function
     // Toggle button state and update button icon
     if (hideEmbeds) {
         this.setAttribute('data-state', 'show');
-        this.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff" viewBox="0 0 256 256">
-            <path d="M247.31,124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57,61.26,162.88,48,128,48S61.43,61.26,36.34,86.35C17.51,105.18,9,124,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208s66.57-13.26,91.66-38.34c18.83-18.83,27.3-37.61,27.65-38.4A8,8,0,0,0,247.31,124.76ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.47,133.47,0,0,1,25,128,133.33,133.33,0,0,1,48.07,97.25C70.33,75.19,97.22,64,128,64s57.67,11.19,79.93,33.25A133.46,133.46,0,0,1,231.05,128C223.84,141.46,192.43,192,128,192Zm0-112a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Z"></path>
-        </svg>`;
+        this.innerHTML = `<i class="ph ph-eye-slash"></i>`;
     } else {
         this.setAttribute('data-state', 'hide');
-        this.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff" viewBox="0 0 256 256">
-            <path d="M53.92,34.62A8,8,0,1,0,42.08,45.38L61.32,66.55C25,88.84,9.38,123.2,8.69,124.76a8,8,0,0,0,0,6.5c.35.79,8.82,19.57,27.65,38.4C61.43,194.74,93.12,208,128,208a127.11,127.11,0,0,0,52.07-10.83l22,24.21a8,8,0,1,0,11.84-10.76Zm47.33,75.84,41.67,45.85a32,32,0,0,1-41.67-45.85ZM128,192c-30.78,0-57.67-11.19-79.93-33.25A133.16,133.16,0,0,1,25,128c4.69-8.79,19.66-33.39,47.35-49.38l18,19.75a48,48,0,0,0,63.66,70l14.73,16.2A112,112,0,0,1,128,192Zm6-95.43a8,8,0,0,1,3-15.72,48.16,48.16,0,0,1,38.77,42.64,8,8,0,0,1-7.22,8.71,6.39,6.39,0,0,1-.75,0,8,8,0,0,1-8-7.26A32.09,32.09,0,0,0,134,96.57Zm113.28,34.69c-.42.94-10.55,23.37-33.36,43.8a8,8,0,1,1-10.67-11.92A132.77,132.77,0,0,0,231.05,128a133.15,133.15,0,0,0-23.12-30.77C185.67,75.19,158.78,64,128,64a118.37,118.37,0,0,0-19.36,1.57A8,8,0,1,1,106,49.79,134,134,0,0,1,128,48c34.88,0,66.57,13.26,91.66,38.35,18.83,18.83,27.3,37.62,27.65,38.41A8,8,0,0,1,247.31,131.26Z"></path>
-        </svg>`;
+        this.innerHTML = `<i class="ph ph-eye"></i>`;
     }
 });

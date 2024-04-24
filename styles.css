@@ -1,7 +1,7 @@
 body {
-    font-family: 'Oxanium', sans-serif;
+    font-family: "DM Sans", sans-serif;
     background-color: #121212;
-    color: #ffffff;
+    color: #E7E7E7;
     margin: 0;
     padding-bottom: 16rem;
 }
@@ -40,7 +40,7 @@ body {
 }
 
 .card {
-    background-color: #2222224a;
+    background-color: rgba(36, 36, 36, 0.18);
     border-radius: 10px;
     padding: 20px;
     width: 100%;
@@ -57,16 +57,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 500;
-    font-size: 16px;
-    color: #FF69B4;
+    color: #ffffff;
 }
 
 .card-header div {
-    font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.75rem;
 }
 
 .card-content {
@@ -83,8 +80,23 @@ body {
     width: 100%; /* Ensure full width */
     height: 100%; /* Ensure full height */
     border: none; /* Remove iframe border */
+    border-radius: 0.5rem;
 }
-
+.card-profile-pic{
+    border-radius: 60px;
+    display: block;
+    height: 2.5rem;
+    width: 2.5rem;
+    display: block;
+    border-radius: 9000px;
+    object-fit: cover;
+}
+.card-userinfo-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
 
 .tiktok-content iframe {
     width: 323px;
@@ -119,16 +131,20 @@ body {
 }
 
 .button-style {
+    font-family: "DM Sans", sans-serif;
     display: flex; /* Use flexbox */    
     align-items: center; /* Align items vertically */
     padding: 8px 8px;
     background-color: #24242400;
     border: none;
     border-radius: 5px;
-    color: #ffffff;
-    font-size: 14px;
+    color: #E7E7E7;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+.button-style i{
+    font-size: 20px;
 }
 
 .button-style svg {
@@ -137,26 +153,26 @@ body {
 }
 
 .button-style:hover {
-    background-color: #363636;
+    background-color: #252525;
 }
 /* Toggle button styles */
-.toggle-button  {
-    font-family: 'Oxanium', sans-serif;
+.card-buttons  {
+    font-family: "DM Sans", sans-serif;
     align-items: center;
     display: inline-flex;
     gap: 4px;
-    background-color: #242424;
-    color: #ffffff;
+    background-color: #24242400;
+    color: #E7E7E7;
     border: none;
     border-radius: 5px;
     padding: 10px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.toggle-button:hover {
-    background-color: #1d1d1d;
+.card-buttons:hover {
+    background-color: #252525;
 }
 
 #loader {
@@ -217,8 +233,10 @@ body {
 
 /* Updated CSS for the card count button */
 #card-count-button {
-    font-family: 'Oxanium', sans-serif;
+    font-family: "DM Sans", sans-serif;
     pointer-events: none; /* Disable pointer events */
+    gap: 8px;
+    font-size: 14px;
 }
 
 #card-count-button:hover {
@@ -226,27 +244,42 @@ body {
 }
 /* Updated CSS for the toggle queue button */
 #toggle-queue-button {
-    font-family: 'Oxanium', sans-serif;
-    background-color: #4caf50; /* Green for open queue */
-    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    width: 140px;
+    font-family: "DM Sans", sans-serif;
+    background-color: rgba(255, 113, 215, 0.13); /* Purple for open queue */
+    color: #FF71D7;
+    gap: 8px;
     border: none;
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
+.profile-pic{
+    border-radius: 60px;
+    display: block;
+    height: 2rem;
+    width: 2rem;
+    display: block;
+    border-radius: 9000px;
+    object-fit: cover;
+}
+
 
 #toggle-queue-button.close {
-    background-color: #f44336; /* Red for close queue */
+    background-color: #202020; /* Grey for close queue */
+    color: #E7E7E7;
 }
 
 /* Hover effect */
 #toggle-queue-button:hover {
-    background-color: #357a38; /* Dark green on hover for open queue */
+    background-color: rgba(255, 113, 215, 0.20); /* Dark green on hover for open queue */
 }
 
 #toggle-queue-button.close:hover {
-    background-color: #c62828; /* Dark red on hover for close queue */
+    background-color: #2b2b2b; /* Lighter grey on hover for close queue */
 }
 /* Custom scrollbar */
 body::-webkit-scrollbar {
@@ -273,11 +306,11 @@ body::-webkit-scrollbar-thumb:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3333333d;
+    background-color: 121212;
     padding: 10px 20px;
 }
-.navbar img{
-    width: 28px;
+.web-logo{
+    width: auto;
     height: 28px;
     display: flex;
     justify-content: center;
@@ -288,8 +321,9 @@ body::-webkit-scrollbar-thumb:hover {
     gap: 8px;
 }
 .navbar-title{
+    font-family: "Oxanium", sans-serif;
     margin: 0;
-    color: #ffffff;
+    color: #E7E7E7;
     font-size: 24px;
     font-weight: 500;
     display: flex;
@@ -297,7 +331,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .navbar h1 {
     margin: 0;
-    color: #ffffff;
+    color: #E7E7E7;
     font-size: 24px;
     font-weight: 500;
     display: flex;
@@ -310,3 +344,18 @@ body::-webkit-scrollbar-thumb:hover {
     gap: 10px;
     align-items: center;
 }
+
+.link-element{
+    color: #FF71D7;
+    text-decoration: none;
+    font-weight: 400 !important;
+
+}
+a:hover {
+    text-decoration: underline;
+  }
+
+.header-info{
+    display: flex;
+    flex-direction: column;
+  }
