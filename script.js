@@ -25,12 +25,12 @@ function fetchChat() {
         // Save the message first
         const savedMessage = extractMessageText(message);
 
-// Parse message for links
-const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%#]*)?/gi;
+        // Check if the message contains the specified word
+        if (!/\b(?:@)?ayyybubu\b/i.test(message)) return;
 
-
-const links = message.match(linkRegex);
-
+        // Parse message for links
+        const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%#]*)?/gi;
+        const links = message.match(linkRegex);
 
         if (links && links.length > 0) {
             // Extract username from the message
@@ -77,7 +77,7 @@ const links = message.match(linkRegex);
                             type = 'twitter';
                         }
                     } else if (isImageLink(link)) {
-                        embedCode = `<img src="${link}" alt="Image" style="width: 100%; max-width: 100%; height: auto;">`;
+                        embedCode = `<img src="${link}" alt="Image" style="width: 100%; max-width: 100%; height: auto; border-radius: 0.5rem;">`;
                         type = 'image';
                     } else {
                         embedCode = `<a href="${link}" target="_blank">${link}</a>`; // Create a link card for unsupported links
@@ -87,8 +87,7 @@ const links = message.match(linkRegex);
                     if (embedCode) {
                         // Add the saved message text to the card
                         const cardContent = `<div>${embedCode}</div>`;
-// Inside fetchChat function
-addCard(username, link, embedCode, type, savedMessage);
+                        addCard(username, link, embedCode, type, savedMessage);
 
                         processedLinks[link] = true; // Mark link as processed
                         cardCount++; // Increment card count
@@ -100,6 +99,7 @@ addCard(username, link, embedCode, type, savedMessage);
     };
 }
 
+
 function extractMessageText(message) {
     const firstColonIndex = message.indexOf(":");
     if (firstColonIndex !== -1) {
@@ -107,10 +107,12 @@ function extractMessageText(message) {
         const colonAfterUsername = message.indexOf(":", usernameEndIndex);
         if (colonAfterUsername !== -1) {
             let messageText = message.substring(colonAfterUsername + 1).trim();
+// Remove specified word and its variations along with @ and ,
+messageText = messageText.replace(/\b(?:@)?ayyybubu\b/gi, "").replace(/[,@]/g, "");
             // Replace link with "LINK"
             messageText = messageText.replace(/(?:(?:https?:\/\/|www\.)\S+|\b\S+\.\S+)/gi, "");
 
-            return messageText;
+            return messageText.trim();
         }
     }
     return "";
