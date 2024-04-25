@@ -1,4 +1,4 @@
-const channel = "ayyybubu"; // Replace with your Twitch channel name
+const channel = "yabbe"; // Replace with your Twitch channel name
 let processedLinks = {}; // Object to store processed links
 let twitterLinks = {}; // Object to store Twitter links and their corresponding cards
 let isConnected = false; // Flag to indicate if connected to Twitch chat
@@ -26,7 +26,7 @@ function fetchChat() {
         const savedMessage = extractMessageText(message);
 
         // Check if the message contains the specified word
-        if (!/\b(?:@)?ayyybubu\b/i.test(savedMessage)) return;
+        if (!/\b(?:@)?yabbe\b/i.test(savedMessage)) return;
 
         // Parse message for links
         const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%@%#]*)?/gi;
