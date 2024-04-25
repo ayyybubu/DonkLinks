@@ -113,6 +113,10 @@ body {
     align-items: center;
     flex-direction: column;
 }
+.card-content img{
+    max-height: 600px;
+    object-fit: scale-down;
+}
 
 
 .card-userinfo-text{
