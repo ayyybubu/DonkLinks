@@ -184,7 +184,17 @@ function createCard(username, link, embedCode, type, savedMessage) {
         card.classList.add('tiktok-card');
     }
     card.dataset.link = link;
-
+    // If it's an Imgur link, modify the embed URL based on whether it's an album or single image
+    if (type === 'imgur') {
+        const imgurIdData = getImgurId(link);
+        if (imgurIdData) {
+            const { id, isAlbum } = imgurIdData;
+            const embedUrl = isAlbum
+                ? `https://imgur.com/a/${id}/embed?pub=true&ref=${window.location.href}&w=540`
+                : `https://imgur.com/a/${id}/embed?pub=true&ref=${window.location.href}&w=540`;
+            embedCode = `<iframe allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" class="imgur-embed-iframe-pub imgur-embed-iframe-pub-a-${id}-true-540" scrolling="no" src="${embedUrl}" id="imgur-embed-iframe-pub-a-${id}" style="height: 500px; width: 540px; margin: 10px 0px; padding: 0px;"></iframe>`;
+        }
+    }
     // Create headerInfo container
     const headerInfo = document.createElement('div');
     headerInfo.classList.add('header-info');
@@ -370,13 +380,13 @@ function addCard(username, link, embedCode, card, savedMessage) {
         type = 'tiktok';
     } else if (isImageLink(link)) {
         type = 'image';
-    /*} else if (link.includes("imgur.com")) { < shit doesnt work 90% of the time
+    } else if (link.includes("imgur.com")) {
         // If the link is from Imgur, create the Imgur embed code
         const imgurId = getImgurId(link);
         if (imgurId) {
             embedCode = `
             <blockquote class="imgur-embed-pub" lang="en" data-id="${imgurId}">
-                <a href="//imgur.com/gallery/${imgurId}">View on Imgur</a>
+                <a href=""//imgur.com/a/${imgurId};">View on Imgur</a>
             </blockquote>
             <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
         `;
@@ -384,7 +394,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
 
             // Load Imgur SDK asynchronously
             loadImgurSDK();
-        }*/
+        }
     } else {
         type = 'link'; // Treat other links as regular links
     }
@@ -430,9 +440,13 @@ function loadImgurSDK() {
 function getImgurId(url) {
     const regExp = /imgur\.com\/(?:gallery\/)?(?:a\/)?(\w+)/;
     const match = url.match(regExp);
-    return match && match[1];
+    if (match && match[1]) {
+        // Check if it's an album or single image
+        const isAlbum = url.includes("/a/");
+        return { id: match[1], isAlbum: isAlbum };
+    }
+    return null;
 }
-
 
 
 
