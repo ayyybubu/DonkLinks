@@ -474,7 +474,7 @@ function removeCard(card) {
 
 
 // Fetch chat every 5 seconds
-/*setInterval(fetchChat, 5000);*/
+setInterval(fetchChat, 5000);
 
 // Call fetchChat initially
 fetchChat();
