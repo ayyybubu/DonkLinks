@@ -26,7 +26,7 @@ function fetchChat() {
         const savedMessage = extractMessageText(message);
 
         // Check if the message contains the specified word
-        if (!/\b(?:@)?ayyybubu\b/i.test(message)) return;
+        if (!/\b(?:@)?ayyybubu\b/i.test(savedMessage)) return;
 
         // Parse message for links
         const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%@%#]*)?/gi;
@@ -108,11 +108,10 @@ function extractMessageText(message) {
         if (colonAfterUsername !== -1) {
             let messageText = message.substring(colonAfterUsername + 1).trim();
 // Remove specified word and its variations along with @ and ,
-messageText = messageText.replace(/\b(?:@)?ayyybubu\b/gi, "").replace(/[,@]/g, "");
             // Replace link with "LINK"
             messageText = messageText.replace(/(?:(?:https?:\/\/|www\.)\S+|\b\S+\.\S+)/gi, "");
 
-            return messageText.trim();
+            return messageText;
         }
     }
     return "";
