@@ -1,20 +1,21 @@
-const channel = "yabbe"; // Replace with your Twitch channel name
+
+let channel = ""; // Initialize channel variable
+let webSocket; // Define WebSocket variable
 let processedLinks = {}; // Object to store processed links
 let twitterLinks = {}; // Object to store Twitter links and their corresponding cards
 let isConnected = false; // Flag to indicate if connected to Twitch chat
 let cardCount = 0; // Counter for the number of cards
 let isQueueOpen = false; // Flag to indicate if the queue is open (default closed)
 
-function fetchChat() {
-    const cardsContainer = document.getElementById("cards-container");
-
-    const webSocket = new WebSocket(`wss://irc-ws.chat.twitch.tv:443`);
+// Function to initialize the WebSocket connection
+// Function to initialize the WebSocket connection
+function initWebSocket() {
+    webSocket = new WebSocket(`wss://irc-ws.chat.twitch.tv:443`);
     webSocket.onopen = function (event) {
-        isConnected = true; // Set connection status to true when connected
-        updateStatusIndicator(); // Update status indicator
-        // Join the Twitch channel
-        webSocket.send(`NICK justinfan123`); // Just a temporary anonymous username
-        webSocket.send(`JOIN #${channel}`);
+        isConnected = true;
+        updateStatusIndicator();
+        webSocket.send(`NICK justinfan123`);
+        webSocket.send(`JOIN #${channel}`); // Join the specified channel
     };
 
     webSocket.onmessage = function (event) {
@@ -26,7 +27,8 @@ function fetchChat() {
         const savedMessage = extractMessageText(message);
 
         // Check if the message contains the specified word
-        if (!/\b(?:@)?yabbe\b/i.test(savedMessage)) return;
+        const channelRegex = new RegExp(`\\b(?:@)?${channel}\\b`, 'i');
+        if (!channelRegex.test(savedMessage)) return;
 
         // Parse message for links
         const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%@%#]*)?/gi;
@@ -98,6 +100,16 @@ function fetchChat() {
         }
     };
 }
+
+function fetchChat() {
+    // Close the existing WebSocket connection if it exists
+    if (webSocket && webSocket.readyState === WebSocket.OPEN) {
+        webSocket.close();
+    }
+    // Initialize the WebSocket connection for the new channel
+    initWebSocket();
+}
+initWebSocket();
 
 
 function extractMessageText(message) {
@@ -462,7 +474,7 @@ function removeCard(card) {
 
 
 // Fetch chat every 5 seconds
-setInterval(fetchChat, 5000);
+/*setInterval(fetchChat, 5000);*/
 
 // Call fetchChat initially
 fetchChat();
@@ -555,3 +567,54 @@ document.getElementById("hide-embeds-button").addEventListener("click", function
         this.innerHTML = `<i class="ph ph-eye"></i>`;
     }
 });
+
+
+
+
+
+// Add event listener for the save button
+document.addEventListener('click', function(event) {
+    const saveButton = event.target.closest('#change-channel-button');
+    if (saveButton) {
+        const channelInput = document.getElementById('channel-input');
+        const newChannel = channelInput.value.trim();
+
+        // Update the channel variable
+        channel = newChannel;
+
+        // Fetch chat for the new channel
+        fetchChat();
+
+        // Replace the channel control with the username element
+        const channelControl = saveButton.closest('.channel-control');
+        const usernameElement = document.createElement('div');
+        usernameElement.classList.add('username-text');
+        usernameElement.innerHTML = `
+        <div class="username-con"><div class="profile-pic-con"><img src="https://static-cdn.jtvnw.net/user-default-pictures-uv/41780b5a-def8-11e9-94d9-784f43822e80-profile_image-300x300.png" class="profile-pic" alt="Profile picture"></div>
+            ${newChannel}</div>
+            <button id="edit-username" class="edit-username"><i class="ph ph-pencil-simple-line"></i></button>
+        `;
+        channelControl.replaceWith(usernameElement);
+    }
+});
+
+// Add event listener for the edit username button
+document.addEventListener('click', function(event) {
+    const editButton = event.target.closest('#edit-username');
+    if (editButton) {
+        const usernameElement = editButton.closest('.username-text');
+        const username = usernameElement.textContent.trim();
+        
+        // Create the channel control input field and save button
+        const channelControl = document.createElement('div');
+        channelControl.classList.add('channel-control');
+        channelControl.innerHTML = `
+            <input required placeholder="Channel name" type="text" id="channel-input" value="${username}" />
+            <button id="change-channel-button" class="save-button"><i class="ph ph-floppy-disk"></i></button>
+        `;
+
+        // Replace the username element with the channel control
+        usernameElement.replaceWith(channelControl);
+    }
+});
+

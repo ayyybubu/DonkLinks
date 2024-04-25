@@ -402,3 +402,81 @@ a:hover {
     display: flex;
     flex-direction: column;
   }
+
+  /* Style for the input field */
+#channel-input {
+    width: 112px;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+}
+
+.channel-control{
+    width: fit-content;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #202020;
+    padding: 0 8px;
+    border-radius: 5px;
+}
+.save-button{
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 20px;
+    color: #7a7a7a;
+}
+
+.save-button:hover {
+    color: #E7E7E7;
+}
+.username-text{
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+.username-con{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.username-text i{
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 16px;
+    color: #7a7a7a;
+}
+.username-text i:hover{
+    color: #E7E7E7;
+}
+.edit-username{
+    font-family: "DM Sans", sans-serif;
+    display: flex; /* Use flexbox */    
+    align-items: center; /* Align items vertically */
+    background-color: #24242400;
+    border: none;
+    border-radius: 5px;
+    color: #E7E7E7;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}   
