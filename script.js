@@ -370,13 +370,13 @@ function addCard(username, link, embedCode, card, savedMessage) {
         type = 'tiktok';
     } else if (isImageLink(link)) {
         type = 'image';
-    } else if (link.includes("imgur.com")) {
+    /*} else if (link.includes("imgur.com")) { < shit doesnt work 90% of the time
         // If the link is from Imgur, create the Imgur embed code
         const imgurId = getImgurId(link);
         if (imgurId) {
             embedCode = `
             <blockquote class="imgur-embed-pub" lang="en" data-id="${imgurId}">
-                <a href="//imgur.com/${imgurId}&parent=ayyybubu.github.io">View on Imgur</a>
+                <a href="//imgur.com/gallery/${imgurId}">View on Imgur</a>
             </blockquote>
             <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
         `;
@@ -384,7 +384,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
 
             // Load Imgur SDK asynchronously
             loadImgurSDK();
-        }
+        }*/
     } else {
         type = 'link'; // Treat other links as regular links
     }
