@@ -376,7 +376,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
         if (imgurId) {
             embedCode = `
             <blockquote class="imgur-embed-pub" lang="en" data-id="${imgurId}">
-                <a href="//imgur.com/${imgurId}">View on Imgur</a>
+                <a href="//imgur.com/${imgurId}&parent=ayyybubu.github.io">View on Imgur</a>
             </blockquote>
             <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
         `;
