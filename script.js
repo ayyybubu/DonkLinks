@@ -578,26 +578,25 @@ document.addEventListener('click', function(event) {
     if (saveButton) {
         const channelInput = document.getElementById('channel-input');
         const newChannel = channelInput.value.trim();
-
-        // Update the channel variable
-        channel = newChannel;
-
-        // Fetch chat for the new channel
-        fetchChat();
-
+        
         // Replace the channel control with the username element
-        const channelControl = saveButton.closest('.channel-control');
         const usernameElement = document.createElement('div');
         usernameElement.classList.add('username-text');
         usernameElement.innerHTML = `
         <div class="username-con"><div class="profile-pic-con"><img src="https://static-cdn.jtvnw.net/user-default-pictures-uv/41780b5a-def8-11e9-94d9-784f43822e80-profile_image-300x300.png" class="profile-pic" alt="Profile picture"></div>
-            ${newChannel}</div>
+            ${newChannel}
             <button id="edit-username" class="edit-username"><i class="ph ph-pencil-simple-line"></i></button>
         `;
+        const channelControl = saveButton.closest('.channel-control');
         channelControl.replaceWith(usernameElement);
+
+        // Save the channel as a cookie
+        setCookie('channel', newChannel, 30); // Save the channel cookie for 30 days
+
+        // Set the channel to the new channel
+        channel = newChannel;
     }
 });
-
 // Add event listener for the edit username button
 document.addEventListener('click', function(event) {
     const editButton = event.target.closest('#edit-username');
@@ -618,3 +617,49 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Function to set a cookie
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+// Function to get a cookie by name
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i];
+        while (cookie.charAt(0) == ' ') {
+            cookie = cookie.substring(1, cookie.length);
+        }
+        if (cookie.indexOf(nameEQ) == 0) {
+            return cookie.substring(nameEQ.length, cookie.length);
+        }
+    }
+    return null;
+}
+
+// Function to delete a cookie by name
+function deleteCookie(name) {
+    document.cookie = name + "=; Max-Age=-99999999;";  
+}
+
+// Check if there's a channel cookie saved
+const channelCookie = getCookie('channel');
+if (channelCookie) {
+    const usernameElement = document.createElement('div');
+    usernameElement.classList.add('username-text');
+    usernameElement.innerHTML = `
+    <div class="username-con"><div class="profile-pic-con"><img src="https://static-cdn.jtvnw.net/user-default-pictures-uv/41780b5a-def8-11e9-94d9-784f43822e80-profile_image-300x300.png" class="profile-pic" alt="Profile picture"></div>
+        ${channelCookie}
+        <button id="edit-username" class="edit-username"><i class="ph ph-pencil-simple-line"></i></button>
+    `;
+    const channelControl = document.querySelector('.channel-control');
+    channelControl.replaceWith(usernameElement);
+    channel = channelCookie; // Set the channel to the cookie channel
+}
