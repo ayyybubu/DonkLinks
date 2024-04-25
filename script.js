@@ -29,7 +29,7 @@ function fetchChat() {
         if (!/\b(?:@)?ayyybubu\b/i.test(message)) return;
 
         // Parse message for links
-        const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%#]*)?/gi;
+        const linkRegex = /(?:https?:\/\/)?(?:www\.)?(?:[\w-]+\.)+[a-z]{2,}(?:\/(?:@[\w-]+\/video\/)?[\w-./?=&%@%#]*)?/gi;
         const links = message.match(linkRegex);
 
         if (links && links.length > 0) {
@@ -209,7 +209,7 @@ function createCard(username, link, embedCode, type, savedMessage) {
     cardHeader.classList.add('card-header');
     cardHeader.innerHTML = `
         <div class="card-userinfo"> 
-            <div class="profile-pic-con"><img src="https://cdn.7tv.app/emote/64a0529cecdb531b02a2e378/3x.webp" class="card-profile-pic" alt="Profile picture"></div>
+            <div class="profile-pic-con"><img src="https://static-cdn.jtvnw.net/user-default-pictures-uv/41780b5a-def8-11e9-94d9-784f43822e80-profile_image-300x300.png" class="card-profile-pic" alt="Profile picture"></div>
             <div class="card-userinfo-text" style="display: flex; flex-direction: column;align-items: flex-start; gap: 0px;">   
                 <span style="font-weight: 600; font-size: 16px;">${username}</span> 
                 ${linkElement.outerHTML} 
@@ -246,6 +246,9 @@ function createCard(username, link, embedCode, type, savedMessage) {
         }
         else if (type === 'youtube') {
             cardContent.classList.add('youtube-style');
+        }
+        else if (type === 'twitch') {
+            cardContent.classList.add('twitch-style');
         }
         // For Imgur embeds, wrap the embed code inside a container div
         if (type === 'imgur') {
@@ -355,16 +358,16 @@ function addCard(username, link, embedCode, card, savedMessage) {
     if (link.includes("youtube.com") || link.includes("youtu.be")) {
         type = 'youtube';
     } else if (link.includes("clips.twitch.tv")) {
-        type = 'default';
+        type = 'twitch';
     } else if (link.includes("twitch.tv")) {
-        type = 'default';
+        type = 'twitch';
     } else if (isTwitterVideoLink(link)) {
         // Prepend "https://" to the link if it's a Twitter link and doesn't start with it
         if (!link.startsWith('https://') && !link.startsWith('http://')) {
             link = 'https://' + link;
         }
         type = 'twitter';
-    } else if (link.includes("tiktok.com") && !link.includes("vm.tiktok.com")) {
+    } else if (link.includes("tiktok.com") && link.includes("/video/")) {
         type = 'tiktok';
     } else if (isImageLink(link)) {
         type = 'image';
@@ -453,12 +456,32 @@ fetchChat();
 
 // Reset table button functionality
 document.getElementById("reset-button").addEventListener("click", function() {
-    const cardsContainer = document.getElementById("cards-container");
-    cardsContainer.innerHTML = '';
-    processedLinks = {};
-    cardCount = 0; // Reset the card count
-    updateCardCount(); // Update the card count display
+    // Prompt the user for confirmation before clearing the queue
+    const isConfirmed = confirm("Are you sure you want to clear the queue?");
+    
+    // Check if the user confirmed
+    if (isConfirmed) {
+        const cardsContainer = document.getElementById("cards-container");
+        cardsContainer.innerHTML = '';
+        processedLinks = {};
+        cardCount = 0; // Reset the card count
+        updateCardCount(); // Update the card count display
+    }
 });
+// Add event listener for the beforeunload event
+window.addEventListener('beforeunload', function(event) {
+    // Check if there are links on the page
+    const cardsContainer = document.getElementById("cards-container");
+    const cards = cardsContainer.querySelectorAll('.card');
+    if (cards.length > 0) {
+        // Display a confirmation dialog
+        const confirmationMessage = 'Are you sure you want to leave? There are still links on the page.';
+        event.returnValue = confirmationMessage; // For older browsers
+        return confirmationMessage; // For modern browsers
+    }
+});
+
+
 
 //Toggle queue button functionality
 document.getElementById("toggle-queue-button").addEventListener("click", function() {

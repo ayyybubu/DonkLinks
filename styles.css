@@ -80,6 +80,14 @@ body {
     margin-top: 1rem;
     height: 0;
 }
+.twitch-style {
+    position: relative; /* Make the container relative */
+    width: 100%; /* Ensure full width */
+    padding-top: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
+    margin-top: 1rem;
+    height: 0;
+}
+
 
 .card-content iframe {
     top: 0;
@@ -130,7 +138,7 @@ body {
 .tiktok-card .card-content {
     position: relative;
     width: 100%;
-    padding-top: 756px; /* 9:16 aspect ratio for TikTok */
+    padding-top: 738px; /* 9:16 aspect ratio for TikTok */
 }
 
 .tiktok-card .card-content iframe {
@@ -144,6 +152,9 @@ body {
     position: absolute;
 }
 
+.twitch-style iframe{
+    position: absolute;
+}
 .card-content a {
     color: #242424; /* Adjusted color */
     text-decoration: none;
