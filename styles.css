@@ -48,6 +48,7 @@ body {
     width: 100%;
 }
 #twitter-container{
+    position: absolute;
     display: flex;
     justify-content: center;
 }
@@ -79,6 +80,8 @@ body {
     padding-top: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
     margin-top: 1rem;
     height: 0;
+    overflow: hidden;
+    border-radius: 0.5rem;
 }
 .twitch-style {
     position: relative; /* Make the container relative */
@@ -86,6 +89,7 @@ body {
     padding-top: 56.25%; /* 16:9 aspect ratio (9 / 16 * 100) */
     margin-top: 1rem;
     height: 0;
+    overflow: hidden;
 }
 
 
@@ -96,6 +100,7 @@ body {
     height: 100%; /* Ensure full height */
     border: none; /* Remove iframe border */
     border-radius: 0.5rem;
+    filter: blur(12px);
 }
 .card-profile-pic{
     border-radius: 60px;
@@ -107,7 +112,8 @@ body {
     object-fit: cover;
 }
 
-.imgur-container {
+.imgur-style {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,6 +122,7 @@ body {
 .card-content img{
     max-height: 600px;
     object-fit: scale-down;
+    filter: blur(12px);
 }
 
 
@@ -137,6 +144,7 @@ body {
 }
 
 .twitter-style{
+    position: relative;
     padding: 0%;
 }
 .tiktok-card .card-content {
@@ -567,4 +575,22 @@ a:hover {
 }
 #card-count-button-mb {
     display: none;
+    }
+
+    .toggle-blur-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .toggle-blur-button:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #000;
     }

@@ -272,14 +272,10 @@ function createCard(username, link, embedCode, type, savedMessage) {
             cardContent.classList.add('twitch-style');
         }
         // For Imgur embeds, wrap the embed code inside a container div
-        if (type === 'imgur') {
-            const imgurContainer = document.createElement('div');
-            imgurContainer.classList.add('imgur-container');
-            imgurContainer.innerHTML = embedCode;
-            cardContent.appendChild(imgurContainer);
-        } else {
-            cardContent.innerHTML = embedCode;
+        else if (type === 'imgur') {
+            cardContent.classList.add('imgur-style');
         }
+        cardContent.innerHTML = embedCode;
         card.appendChild(cardContent);
     }
 
@@ -291,6 +287,42 @@ function createCard(username, link, embedCode, type, savedMessage) {
         const link = card.dataset.link;
         delete processedLinks[link];
     });
+// Create the button to toggle blur
+const blurButton = document.createElement('button');
+blurButton.classList.add('toggle-blur-button');
+blurButton.textContent = 'Show Content';
+blurButton.addEventListener('click', function() {
+    const cardContent = card.querySelector('.card-content');
+    if (cardContent) {
+        const iframe = cardContent.querySelector('iframe');
+        if (iframe) {
+            if (iframe.style.filter === 'blur(6px)') {
+                iframe.style.filter = 'blur(0px)';
+            } else {
+                iframe.style.filter = 'blur(0px)';
+            }
+        } else {
+            const image = cardContent.querySelector('img');
+            if (image) {
+                if (image.style.filter === 'blur(6px)') {
+                    image.style.filter = 'blur(0px)';
+                } else {
+                    image.style.filter = 'blur(0px)';
+                }
+            }
+        }
+    }
+
+    // Hide the button after clicking
+    blurButton.style.display = 'none';
+});
+
+// Add the button to the card content
+const cardContent = card.querySelector('.card-content');
+if (cardContent) {
+    cardContent.appendChild(blurButton);
+}
+
 
     return card;
 }
