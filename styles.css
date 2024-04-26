@@ -446,6 +446,7 @@ a:hover {
     transition: all 0.3s;
     font-size: 20px;
     color: #7a7a7a;
+    padding: 0%;
 }
 
 .save-button:hover {
@@ -490,3 +491,77 @@ a:hover {
     cursor: pointer;
     transition: background-color 0.3s;
 }   
+@media screen and (max-width: 780px) {
+    .navbar-title {
+      display: none;
+    }
+  
+    #toggle-queue-button {
+      font-size: 0; /* Hide the text content */
+      display: flex;
+    justify-content: center;
+    width: auto;
+    font-family: "DM Sans", sans-serif;
+    background-color: rgba(255, 113, 215, 0.13);
+    color: #FF71D7;
+    gap: 0px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    }
+    #toggle-queue-button.close {
+        background-color: #20202000; /* Grey for close queue */
+        color: #E7E7E7;
+    }
+    
+    /* Hover effect */
+    #toggle-queue-button:hover {
+        background-color: rgba(255, 113, 215, 0.20); /* Dark green on hover for open queue */
+    }
+    
+    #toggle-queue-button.close:hover {
+        background-color: #252525; /* Lighter grey on hover for close queue */
+    }
+
+    .username-con {
+        font-size: 0; /* Hide the text content */
+        gap: 0.25rem;
+      }
+    
+    #channel-input{
+        width: 6rem;
+    }
+    #card-count-button {
+    display: none;
+    }
+    #card-count-button-mb {
+        display: flex !important;
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+        gap: 0.5rem;
+        }
+    .navbar{
+        padding: 10px;
+    }
+    .edit-username{
+        padding: 0;
+    }
+    #scroll-to-top-button{
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        gap: 0;
+        font-size: 0;
+    }
+  }
+#scroll-to-top-button{
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    gap: 0.5rem;
+}
+#card-count-button-mb {
+    display: none;
+    }
