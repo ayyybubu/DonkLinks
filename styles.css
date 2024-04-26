@@ -1,6 +1,6 @@
 body {
     font-family: "DM Sans", sans-serif;
-    background-color: #121212;
+    background-color: rgb(10 10 10);
     color: #E7E7E7;
     margin: 0;
     padding-bottom: 16rem;
@@ -42,7 +42,7 @@ body {
 }
 
 .card {
-    background-color: rgba(36, 36, 36, 0.18);
+    background-color: rgba(36, 36, 36, 0);
     border-radius: 0.5rem;
     padding: 1rem;
     width: 100%;
@@ -52,7 +52,7 @@ body {
     justify-content: center;
 }
 .tiktok-card {
-    background-color: #2222224a;
+    background-color: #22222200;
 }
 
 .card-header {
@@ -141,16 +141,20 @@ body {
 }
 .tiktok-card .card-content {
     position: relative;
-    width: 100%;
-    padding-top: 738px; /* 9:16 aspect ratio for TikTok */
+    width: 323px;
+    padding-top: 739px;
+    left: 25%;
+    overflow: hidden;
+    border-radius: 0.5rem;
 }
 
 .tiktok-card .card-content iframe {
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 0;
-    width: 100%;
+    width: 323px;
     border: none;
+    border-radius: 0.5rem;
 }
 .youtube-style iframe{
     position: absolute;
@@ -343,7 +347,9 @@ body::-webkit-scrollbar-thumb:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #121212;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur( 17px );
+    -webkit-backdrop-filter: blur( 17px );
     padding: 10px 20px;
     overflow: hidden;
     position: fixed; /* Set the navbar to fixed position */
@@ -423,7 +429,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #202020;
+    background-color: rgb(63 62 62 / 34%);
     padding: 0 8px;
     border-radius: 5px;
 }
