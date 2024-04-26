@@ -79,7 +79,7 @@ function initWebSocket() {
                             type = 'twitter';
                         }
                     } else if (isImageLink(link)) {
-                        embedCode = `<img src="${link}" alt="Image" style="width: 100%; max-width: 100%; height: auto; border-radius: 0.5rem;">`;
+                        embedCode = `<div class "image-container"><img src="${link}&parent=ayyybubu.github.io" alt="Image"></div>`;
                         type = 'image';
                     } else {
                         embedCode = `<a href="${link}" target="_blank">${link}</a>`; // Create a link card for unsupported links
@@ -203,7 +203,7 @@ function createCard(username, link, embedCode, type, savedMessage) {
             const { id, isAlbum } = imgurIdData;
             const embedUrl = isAlbum
                 ? `https://imgur.com/a/${id}/embed?pub=true&ref=${window.location.href}&w=540`
-                : `https://imgur.com/a/${id}/embed?pub=true&ref=${window.location.href}&w=540`;
+                : `https://imgur.com/${id}/embed?pub=true&ref=${window.location.href}&w=540`;
             embedCode = `<iframe allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" class="imgur-embed-iframe-pub imgur-embed-iframe-pub-a-${id}-true-540" scrolling="no" src="${embedUrl}" id="imgur-embed-iframe-pub-a-${id}" style="height: 500px; width: 540px; margin: 10px 0px; padding: 0px;"></iframe>`;
         }
     }
@@ -407,6 +407,10 @@ function isImageLink(link) {
 function addCard(username, link, embedCode, card, savedMessage) {
     const cardsContainer = document.getElementById("cards-container");
     let type = '';
+    
+    if (!link.startsWith('https://')) {
+    link = 'http://' + link; // Prepend "http://" to the link
+    }
 
     if (link.includes("youtube.com") || link.includes("youtu.be")) {
         type = 'youtube';
@@ -422,8 +426,6 @@ function addCard(username, link, embedCode, card, savedMessage) {
         type = 'twitter';
     } else if (link.includes("tiktok.com") && link.includes("/video/")) {
         type = 'tiktok';
-    } else if (isImageLink(link)) {
-        type = 'image';
     } else if (link.includes("imgur.com")) {
         // If the link is from Imgur, create the Imgur embed code
         const imgurId = getImgurId(link);
@@ -439,6 +441,8 @@ function addCard(username, link, embedCode, card, savedMessage) {
             // Load Imgur SDK asynchronously
             loadImgurSDK();
         }
+    } else if (isImageLink(link)) {
+        type = 'image';
     } else {
         type = 'link'; // Treat other links as regular links
     }
@@ -466,6 +470,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
     } else if (type === 'image') {
         // If the link is an image, create an image element and append it to the card content
         const cardContent = createdCard.querySelector('.card-content');
+        cardContent.classList.add('image-style');
         const imageElement = document.createElement('img');
         cardContent.style.paddingTop = '0%';
     }
@@ -486,7 +491,7 @@ function getImgurId(url) {
     const match = url.match(regExp);
     if (match && match[1]) {
         // Check if it's an album or single image
-        const isAlbum = url.includes("/a/");
+        const isAlbum = url.includes("/a/") || url.includes("/gallery/");
         return { id: match[1], isAlbum: isAlbum };
     }
     return null;

@@ -119,10 +119,23 @@ body {
     align-items: center;
     flex-direction: column;
 }
+.image-style{
+    position: relative;
+    padding-top: 0%;
+    display: flex;
+    justify-content: center
+}
+.image-container{
+    width: min-content;
+    overflow: hidden;
+    border-radius: 0.625rem;
+}
 .card-content img{
+    width: min-content;
     max-height: 600px;
     object-fit: scale-down;
     filter: blur(12px);
+    border-radius: 0.625rem;
 }
 
 
@@ -498,6 +511,7 @@ a:hover {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+    padding: 0;
 }   
 @media screen and (max-width: 780px) {
     .navbar-title {
@@ -593,4 +607,8 @@ a:hover {
     .toggle-blur-button:hover {
         background-color: rgba(255, 255, 255, 0.8);
         color: #000;
+    }
+    .twitter-tweet, .twitter-tweet-rendered{
+        overflow: hidden;
+        border-radius: 0.625rem;
     }
