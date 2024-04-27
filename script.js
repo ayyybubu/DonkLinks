@@ -780,5 +780,5 @@ resetBlurButton.addEventListener('click', function() {
     // Change icon based on blur visibility
     const icon = resetBlurButton.querySelector('i');
     icon.classList.toggle('ph-drop-slash', !blurHidden);
-    icon.classList.toggle('ph-drop-simple', blurHidden);
+    icon.classList.toggle('ph-drop', blurHidden);
 });
