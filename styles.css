@@ -71,8 +71,10 @@ body {
 }
 
 .card-content {
+    position: relative;
     width: 100%; /* Ensure full width */
     margin-top: 1rem;
+    height: max-content;
 }
 
 .youtube-style {

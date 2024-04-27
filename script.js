@@ -444,6 +444,15 @@ function addCard(username, link, embedCode, card, savedMessage) {
         }
     } else if (isImageLink(link)) {
         type = 'image';
+    } else if (link.includes("open.spotify.com")) {
+        embedCode = `
+            <iframe style="border-radius:12px; width: 100%;
+            height: 152px;" src="${link.replace(
+                'https://open.spotify.com',
+                'https://open.spotify.com/embed'
+            )}?utm_source=generator&theme=0" width="100%" height="152" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        `;
+        type = 'spotify';
     } else {
         type = 'link'; // Treat other links as regular links
     }
