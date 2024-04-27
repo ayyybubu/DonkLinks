@@ -79,7 +79,7 @@ function initWebSocket() {
                             type = 'twitter';
                         }
                     } else if (isImageLink(link)) {
-                        embedCode = `<div class "image-container"><img src="${link}&parent=ayyybubu.github.io" alt="Image"></div>`;
+                        embedCode = `<div class "image-container"><img src="${link}" alt="Image"></div>`;
                         type = 'image';
                     } else {
                         embedCode = `<a href="${link}" target="_blank">${link}</a>`; // Create a link card for unsupported links
