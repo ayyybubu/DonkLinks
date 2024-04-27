@@ -149,7 +149,8 @@ function updateCardCount() {
 }
 // Function to extract YouTube video ID from URL
 function getYouTubeVideoId(url) {
-    const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    // Regular expression to match both regular YouTube video links and YouTube Shorts links
+    const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|(?:youtu\.be\/|youtube\.com\/shorts\/))([a-zA-Z0-9_-]{11})/;
     const match = url.match(regExp);
     return match && match[1];
 }
