@@ -21,8 +21,6 @@ function initWebSocket() {
     webSocket.onmessage = function (event) {
         if (!isQueueOpen) return; // Exit if the queue is closed
         const message = event.data;
-        console.log(message); // Log the received message
-
         // Save the message first
         const savedMessage = extractMessageText(message);
 
