@@ -78,6 +78,18 @@ function initWebSocket() {
                             embedCode = `<div class="twitter-container" style="display: flex; justify-content: center;"></div>`;
                             type = 'twitter';
                         }
+                        else if (link.includes("spotify.com")) {
+                            // Check if it's a Spotify link
+                            embedCode = `<iframe style="border-radius:12px" src="${link}" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+                            type = 'spotify';
+                        } else if (link.includes("streamable.com")) {
+                            // Check if it's a Streamable link
+                            const videoId = getStreamableVideoId(link);
+                            if (videoId) {
+                                embedCode = `<iframe src="https://streamable.com/e/${videoId}" width="100%" height="100%" frameborder="0" allowfullscreen style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe>`;
+                                type = 'streamable';
+                            }
+                        }
                     } else if (isImageLink(link)) {
                         embedCode = `<div class "image-container"><img src="${link}" alt="Image"></div>`;
                         type = 'image';
@@ -167,7 +179,11 @@ function getTwitchClipId(url) {
     const match = url.match(regExp);
     return match ? match[1] : null;
 }
-
+// Function to extract Streamable video ID from the link
+function getStreamableVideoId(link) {
+    const match = link.match(/(?:streamable\.com)\/(?:e\/)?([\w]+)/);
+    return match ? match[1] : null;
+}
 
 // Function to extract Twitch video ID from URL
 function getTwitchVideoId(url) {
@@ -427,6 +443,14 @@ function addCard(username, link, embedCode, card, savedMessage) {
         type = 'twitter';
     } else if (link.includes("tiktok.com") && link.includes("/video/")) {
         type = 'tiktok';
+    
+    }  else if (link.includes("streamable.com")) {
+        const videoId = getStreamableVideoId(link);
+        embedCode = `
+        <iframe src="https://streamable.com/e/216wpo"  width="100%" height="100%" frameborder="0" allowfullscreen style="border-radius: 0.625rem; width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div>
+    `;
+        type = 'youtube';
+        
     } else if (link.includes("imgur.com")) {
         // If the link is from Imgur, create the Imgur embed code
         const imgurId = getImgurId(link);
