@@ -313,7 +313,7 @@ blurButton.addEventListener('click', function() {
     if (cardContent) {
         const iframe = cardContent.querySelector('iframe');
         if (iframe) {
-            if (iframe.style.filter === 'blur(6px)') {
+            if (iframe.style.filter === 'blur(12px)') {
                 iframe.style.filter = 'blur(0px)';
             } else {
                 iframe.style.filter = 'blur(0px)';
@@ -321,7 +321,7 @@ blurButton.addEventListener('click', function() {
         } else {
             const image = cardContent.querySelector('img');
             if (image) {
-                if (image.style.filter === 'blur(6px)') {
+                if (image.style.filter === 'blur(12px)') {
                     image.style.filter = 'blur(0px)';
                 } else {
                     image.style.filter = 'blur(0px)';
@@ -337,6 +337,9 @@ blurButton.addEventListener('click', function() {
 // Add the button to the card content
 const cardContent = card.querySelector('.card-content');
 if (cardContent) {
+    if (!blurHidden){
+        blurButton.style.display = 'none';
+    }
     cardContent.appendChild(blurButton);
 }
 
@@ -483,7 +486,19 @@ function addCard(username, link, embedCode, card, savedMessage) {
 
     // Inside addCard function
     const createdCard = createCard(username, link, embedCode, type, savedMessage);
-
+    if (blurHidden) {
+        const cardContent = createdCard.querySelector('.card-content');
+        if (cardContent) {
+            const iframe = cardContent.querySelector('iframe');
+            if (iframe) {
+                iframe.style.filter = 'blur(12px)';
+            }
+            const images = cardContent.querySelectorAll('img');
+            images.forEach(image => {
+                image.style.filter = 'blur(12px)';
+            });
+        }
+    }
     cardsContainer.appendChild(createdCard);
 
     // Apply fade-in animation
@@ -749,7 +764,7 @@ resetBlurButton.addEventListener('click', function() {
                 if (blurHidden) {
                     iframe.style.filter = 'blur(0px)';
                 } else {
-                    iframe.style.filter = 'blur(6px)';
+                    iframe.style.filter = 'blur(12px)';
                 }
                 
                 const toggleBlurButton = cardContent.querySelector('.toggle-blur-button');
@@ -763,7 +778,7 @@ resetBlurButton.addEventListener('click', function() {
                 if (blurHidden) {
                     image.style.filter = 'blur(0px)';
                 } else {
-                    image.style.filter = 'blur(6px)';
+                    image.style.filter = 'blur(12px)';
                 }
             });
 
@@ -782,3 +797,32 @@ resetBlurButton.addEventListener('click', function() {
     icon.classList.toggle('ph-drop-slash', !blurHidden);
     icon.classList.toggle('ph-drop', blurHidden);
 });
+// Update the blur state for newly created cards
+const cards = document.querySelectorAll('.card');
+cards.forEach(card => {
+    const cardContent = card.querySelector('.card-content');
+    if (cardContent) {
+        const iframe = cardContent.querySelector('iframe');
+        if (iframe) {
+            if (blurHidden) {
+                iframe.style.filter = 'blur(12px)';
+            } else {
+                iframe.style.filter = 'blur(0px)';
+            }
+        }
+        const images = cardContent.querySelectorAll('img');
+        images.forEach(image => {
+            if (blurHidden) {
+                image.style.filter = 'blur(12px)';
+            } else {
+                image.style.filter = 'blur(0px)';
+            }
+        });
+    }
+});
+// Update blurButton visibility
+if (blurHidden) {
+    blurButton.style.display = 'none';
+} else {
+    blurButton.style.display = 'block';
+}

@@ -103,7 +103,6 @@ body {
     height: 100%; /* Ensure full height */
     border: none; /* Remove iframe border */
     border-radius: 0.5rem;
-    filter: blur(12px);
 }
 .card-profile-pic{
     border-radius: 60px;
@@ -138,7 +137,6 @@ body {
     width: min-content;
     max-height: 600px;
     object-fit: scale-down;
-    filter: blur(12px);
     border-radius: 0.625rem;
 }
 
