@@ -46,6 +46,7 @@ body {
     border-radius: 0.5rem;
     padding: 1rem;
     width: 100%;
+    max-width: 680px;
 }
 #twitter-container{
     position: absolute;
@@ -131,6 +132,7 @@ body {
     border-radius: 0.625rem;
 }
 .card-content img{
+    max-width: 680px;
     width: min-content;
     max-height: 600px;
     object-fit: scale-down;

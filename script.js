@@ -700,3 +700,51 @@ if (channelCookie) {
     channelControl.replaceWith(usernameElement);
     channel = channelCookie; // Set the channel to the cookie channel
 }
+
+// Create the button to reset blur for all cards
+const resetBlurButton = document.getElementById('resetBlurButton');
+let blurHidden = true;
+
+resetBlurButton.addEventListener('click', function() {
+    const allCards = document.querySelectorAll('.card');
+    allCards.forEach(card => {
+        const cardContent = card.querySelector('.card-content');
+        if (cardContent) {
+            const iframe = cardContent.querySelector('iframe');
+            if (iframe) {
+                if (blurHidden) {
+                    iframe.style.filter = 'blur(0px)';
+                } else {
+                    iframe.style.filter = 'blur(6px)';
+                }
+                
+                const toggleBlurButton = cardContent.querySelector('.toggle-blur-button');
+                if (toggleBlurButton) {
+                    toggleBlurButton.style.display = blurHidden ? 'none' : ''; // Show the toggle blur button if blur is visible
+                }
+            }
+            
+            const images = cardContent.querySelectorAll('img'); // Select all images inside card-content
+            images.forEach(image => {
+                if (blurHidden) {
+                    image.style.filter = 'blur(0px)';
+                } else {
+                    image.style.filter = 'blur(6px)';
+                }
+            });
+
+            const toggleBlurButton = cardContent.querySelector('.toggle-blur-button');
+            if (toggleBlurButton) {
+                toggleBlurButton.style.display = blurHidden ? 'none' : ''; // Show the toggle blur button if blur is visible
+            }
+        }
+    });
+
+    // Toggle blurHidden variable
+    blurHidden = !blurHidden;
+
+    // Change icon based on blur visibility
+    const icon = resetBlurButton.querySelector('i');
+    icon.classList.toggle('ph-drop-slash', !blurHidden);
+    icon.classList.toggle('ph-drop-simple', blurHidden);
+});
