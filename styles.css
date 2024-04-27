@@ -424,6 +424,7 @@ body::-webkit-scrollbar-thumb:hover {
     color: #FF71D7;
     text-decoration: none;
     font-weight: 400 !important;
+    text-align: left;
 
 }
 a:hover {
