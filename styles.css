@@ -390,7 +390,7 @@ body::-webkit-scrollbar-thumb:hover {
     display: flex;
     justify-content: center;
     gap: 8px;
-    align-items: baseline;
+    align-items: stretch;
 }
 .navbar-title{
     font-family: "Oxanium", sans-serif;
