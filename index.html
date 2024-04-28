@@ -19,6 +19,11 @@
             <div class="navbar-title">DonkLinks</div>
         </div>
         <div class="navbar-right">
+            <div id="loader" class="ui-loader loader-blk" style="display: none;">
+                <svg viewBox="22 22 44 44" class="multiColor-loader">
+                    <circle cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6" class="loader-circle loader-circle-animation"></circle>
+                </svg>
+            </div>
             <div class="buttons-right">
                 <button id="card-count-button" class="button-style"><i class="ph ph-link"></i>Links: 0</button>
                 <button id="hide-embeds-button" title="Hide all embeds" class="button-style" data-state ="hide">
@@ -31,11 +36,6 @@
                     <i class="ph ph-trash"></i>
                 </button>
                 <button id="toggle-queue-button" title="Queue Open" class="button-style"><i class="ph ph-lock-key"></i>Queue Closed</button>
-            </div>
-            <div id="loader" class="ui-loader loader-blk" style="display: none;">
-                <svg viewBox="22 22 44 44" class="multiColor-loader">
-                    <circle cx="44" cy="44" r="20.2" fill="none" stroke-width="3.6" class="loader-circle loader-circle-animation"></circle>
-                </svg>
             </div>
             <div class="channel-control">
                 <input required="" placeholder="Channel name" type="text" id="channel-input" />

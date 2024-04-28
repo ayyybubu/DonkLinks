@@ -240,11 +240,8 @@ body {
 }
 
 #loader {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;

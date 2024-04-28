@@ -70,7 +70,7 @@ function initWebSocket() {
                             embedCode = `<iframe src="https://player.twitch.tv/?video=${videoId}&parent=ayyybubu.github.io&autoplay=false" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>`;
                             type = 'default';
                         }
-                    } else if (link.includes("twitter.com")) {
+                    } else if (link.includes("twitter.com") || link.includes("x.com")) {
                         const videoId = getTwitterVideoId(link);
                         if (videoId) {
                             embedCode = `<div class="twitter-container" style="display: flex; justify-content: center;"></div>`;
@@ -378,14 +378,15 @@ document.addEventListener('click', function(event) {
 
 // Function to check if a link is a Twitter video link
 function isTwitterVideoLink(link) {
-    return link.includes("twitter.com") && link.includes("/status/");
+    return link.includes("twitter.com") || link.includes("x.com") && link.includes("/status/");
 }
 
 // Inside the addTwitterEmbed function
 function addTwitterEmbed(link, card, blurHidden) {
+    const videoId = getTwitterVideoId(link);
     const twitterEmbedCode = `
         <blockquote class="twitter-tweet" data-theme="dark">
-            <a href="${link}"></a>
+            <a href="https://twitter.com/user/status/${videoId}"></a>
         </blockquote>
     `;
     const twitterContainer = card.querySelector(".twitter-container");
