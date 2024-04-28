@@ -381,8 +381,8 @@ function isTwitterVideoLink(link) {
     return link.includes("twitter.com") && link.includes("/status/");
 }
 
-// Function to add Twitter embed code to the website
-function addTwitterEmbed(link, card) {
+// Inside the addTwitterEmbed function
+function addTwitterEmbed(link, card, blurHidden) {
     const twitterEmbedCode = `
         <blockquote class="twitter-tweet" data-theme="dark">
             <a href="${link}"></a>
@@ -390,6 +390,24 @@ function addTwitterEmbed(link, card) {
     `;
     const twitterContainer = card.querySelector(".twitter-container");
     twitterContainer.innerHTML = twitterEmbedCode;
+
+    // Apply blur effect if blurHidden is true
+    if (blurHidden) {
+        const observer = new MutationObserver((mutationsList, observer) => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    const iframe = twitterContainer.querySelector('iframe');
+                    if (iframe) {
+                        iframe.style.filter = 'blur(12px)';
+                        observer.disconnect(); // Disconnect observer once iframe is found and blurred
+                    }
+                }
+            }
+        });
+
+        // Start observing changes in the twitterContainer
+        observer.observe(twitterContainer, { childList: true });
+    }
 
     // Since Twitter widgets.js may have already loaded, we check if twttr object is available
     if (window.twttr && typeof window.twttr.widgets === 'object' && typeof window.twttr.widgets.load === 'function') {
@@ -403,6 +421,7 @@ function addTwitterEmbed(link, card) {
         });
     }
 }
+
 
 
 // Function to load the Twitter SDK asynchronously
@@ -513,7 +532,7 @@ function addCard(username, link, embedCode, card, savedMessage) {
 
     // If the link is a Twitter video link, add the Twitter embed to the website
     if (type === 'twitter') {
-        addTwitterEmbed(link, createdCard);
+        addTwitterEmbed(link, createdCard, blurHidden);
     } else if (type === 'image') {
         // If the link is an image, create an image element and append it to the card content
         const cardContent = createdCard.querySelector('.card-content');
