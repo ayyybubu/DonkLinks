@@ -42,8 +42,8 @@ body {
 }
 
 .card {
-    background-color: rgba(36, 36, 36, 0);
-    border-radius: 0.5rem;
+    background-color: #2222221f;
+    border-radius: 0.625rem;
     padding: 1rem;
     width: 100%;
     max-width: 680px;
@@ -54,7 +54,8 @@ body {
     justify-content: center;
 }
 .tiktok-card {
-    background-color: #22222200;
+    background-color: #2222221f;
+    border-radius: 0.625rem;
 }
 
 .card-header {
