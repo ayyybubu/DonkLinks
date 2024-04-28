@@ -61,13 +61,13 @@ function initWebSocket() {
                     } else if (link.includes("clips.twitch.tv")) {
                         const clipId = getTwitchClipId(link);
                         if (clipId) {
-                            embedCode = `<iframe src="https://clips.twitch.tv/embed?clip=${clipId}&parent=ayyybubu.github.io&autoplay=false" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>`;
+                            embedCode = `<iframe src="https://clips.twitch.tv/embed?clip=${clipId}&parent=buh.cat&autoplay=false" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>`;
                             type = 'default';
                         }
                     } else if (link.includes("twitch.tv")) {
                         const videoId = getTwitchVideoId(link);
                         if (videoId) {
-                            embedCode = `<iframe src="https://player.twitch.tv/?video=${videoId}&parent=ayyybubu.github.io&autoplay=false" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>`;
+                            embedCode = `<iframe src="https://player.twitch.tv/?video=${videoId}&parent=buh.cat&autoplay=false" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>`;
                             type = 'default';
                         }
                     } else if (link.includes("twitter.com") || link.includes("x.com")) {
