@@ -165,12 +165,25 @@ function getYouTubeVideoId(url) {
     return match && match[1];
 }
 
-// Function to extract TikTok video ID from URL
-function getTikTokVideoId(url) {
-    const regExp = /\/video\/(\d+)/;
-    const match = url.match(regExp);
-    return match && match[1];
+async function getTikTokVideoId(url) {
+    try {
+        // Fetch the full URL
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Failed to fetch TikTok video URL');
+        }
+        const fullUrl = response.url;
+        console.log(response.url)
+        // Extract the video ID from the full URL
+        const regExp = /\/video\/(\d+)/;
+        const match = fullUrl.match(regExp);
+        return match && match[1];
+    } catch (error) {
+        console.error('Error fetching TikTok video URL:', error);
+        return null;
+    }
 }
+
 
 function getTwitchClipId(url) {
     const regExp = /clips.twitch.tv\/([a-zA-Z0-9_-]+)/;
