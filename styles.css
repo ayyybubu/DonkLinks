@@ -45,6 +45,21 @@ body {
     gap: 1.5rem;
     justify-items: center;
 }
+.beta-tag{
+    margin-top: 3px;
+    border-radius: 4px;
+    padding: 5px 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #c34aa059;
+    color: #ff52ce;
+    height: 12px;
+    justify-content: center;
+}
 
 .card {
     background-color: #2222221f;
