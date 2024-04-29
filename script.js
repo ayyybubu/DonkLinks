@@ -148,7 +148,33 @@ function updateCardCount() {
     // Display "No links submitted" text if link count is 0
     if (cardCount === 0) {
         const cardsContainer = document.getElementById("cards-container");
-        cardsContainer.innerHTML = '<div id="no-links-text" class="howto" style="display: flex;flex-direction: column;gap: 1.5rem;"><div style="font-size: 24px;"><span style="color:#FF71D7;font-weight:500;" > Getting started</span></div><div style="display: flex;justify-content: flex-start;flex-direction: column;/* align-items: flex-start; */text-align: start;max-width: 680px;gap: 8px; padding: 0rem 1rem; font-weight:400;"><div><span style="color:#FF71D7";>1. Enter</span> your Twitch Name.</div><div><span style="color:#FF71D7";>2. Open</span> the queue.</div><div><span style="color:#FF71D7";>3.</span> Your viewers can now post links in chat by tagging you in the message: <span style="color:#FF71D7";>@streamer [link] [optional message]</span></div><div><span style="color:#FF71D7";>4.</span> The links will be displayed on a timeline in a form of cards.</div><div><span style="color:#FF71D7";>5.</span> You can control the <span style="color:#FF71D7";>visibility</span> of all embeds and <span style="color:#FF71D7";>clear</span> the existing queue by using the buttons in the top right corner.</div><div><span style="color:#FF71D7";>6.</span> This website currently supports <span style="color:#FF71D7";>YouTube, Twitch, TikTok, Streamable, Spotify</span> and <span style="color:#FF71D7";>Imgur</span> embeds.</div><div><span style="color:#FF71D7";>7.</span> For suggestions and bug reports contact <span style="color:#FF71D7";>@ayyybubu</span></div></div></div>';
+        cardsContainer.innerHTML = `<div id="no-links-text" class="howto" style="display: flex;flex-direction: column;gap: 1.5rem;">
+        <div style="font-size: 24px;"><span style="color:#FF71D7;font-weight:500;" >Getting started</span></div>
+        <div style="display: flex;justify-content: flex-start;flex-direction: column;/* align-items: flex-start; */text-align: start;max-width: 680px;gap: 8px; padding: 0rem 1rem; font-weight:400;">
+           <div><span style="color:#FF71D7";>1. Enter</span> your Twitch Name.</div>
+           <div><span style="color:#FF71D7";>2. Open</span> the queue.</div>
+           <div><span style="color:#FF71D7";>3.</span> Your viewers can now post links in chat by tagging you in the message: <span style="color:#FF71D7";>@streamer [link] [optional message]</span></div>
+           <div><span style="color:#FF71D7";>4.</span> The links will be displayed on a timeline in a form of cards.</div>
+           <div><span style="color:#FF71D7";>5.</span> You can control the <span style="color:#FF71D7";>visibility</span> of all embeds and <span style="color:#FF71D7";>clear</span> the existing queue by using the buttons in the top right corner.</div>
+           <div><span style="color:#FF71D7";>6.</span> This website currently supports <span style="color:#FF71D7";>YouTube, Twitch, TikTok, Streamable, Spotify</span> and <span style="color:#FF71D7";>Imgur</span> embeds.</div>
+           <div><span style="color:#FF71D7";>7.</span> For suggestions and bug reports contact <span style="color:#FF71D7";>@ayyybubu</span></div>
+        </div>
+        <div style="font-size: 24px;"><span style="color:#FF71D7;font-weight:500;" >Example</span></div>
+        <div class="card" data-link="https://youtu.be/bT2Fp-Bzozo?si=UK1ge_r_DCuAhsl_" style="opacity: 1; transition: opacity 0.5s ease 0s;">
+           <div class="header-info">
+              <div class="card-header">
+                 <div class="card-userinfo">
+                    <div class="profile-pic-con"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/53786bbe-9816-4ab8-ba5d-f9fc42881b3a-profile_image-300x300.png" class="card-profile-pic" alt="Profile picture"></div>
+                    <div class="card-userinfo-text" style="display: flex; flex-direction: column;align-items: flex-start; gap: 0px;"> <span style="font-weight: 600; font-size: 16px;">ayyybubu</span> <a class="link-element" href="https://youtu.be/bT2Fp-Bzozo?si=UK1ge_r_DCuAhsl_" target="_blank"> youtu.be/bT2Fp-Bzozo</a> </div>
+                 </div>
+                 <div class="button-group"> <button class="toggle-button-hide card-buttons"><i class="ph ph-arrows-in-simple"></i></button> <button class="delete-button card-buttons"> <i class="ph ph-x"></i> </button> </div>
+              </div>
+              <div> <span style="word-wrap: break-word; text-align: left; font-weight: 300; font-size: 15px; margin-top: 0.5rem; display: flex;">Hey streamer! Check out this silly cat I found.</span></div>
+           </div>
+           <div class="card-content youtube-style"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/bT2Fp-Bzozo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="filter: blur(0px);"></iframe></div>
+        </div>
+     </div>`;
+        
     } else {
         // Remove "No links submitted" text if link count is not 0
         const noLinksText = document.getElementById("no-links-text");
