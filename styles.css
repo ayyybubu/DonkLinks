@@ -10,7 +10,6 @@ body {
     padding-bottom: 16rem;
     overflow-y: scroll; /* Always show vertical scrollbar */
     padding-right: 10px; /* Adjust based on the width of the scrollbar */
-    height: 100%;
 }
 
 .container {
